@@ -122,7 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
-                                        //TES API
                                       ),
                                     ),
                                     SizedBox(width: 8),

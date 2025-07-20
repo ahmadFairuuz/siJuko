@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../screen/KegiatanScreen.dart';
-/*import '../screen/HasilSurveyScreen.dart';
-import '../screen/KatalogScreen.dart';
 import '../screen/DigilibScreen.dart'; // Impor DigilibScreen
+import '../screen/HasilSurveyScreen.dart';
+import '../screen/KatalogScreen.dart';
+import '../screen/KegiatanScreen.dart';
 import '../screen/LapkeuScreen.dart'; // Pastikan mengimpor LapkeuScreen
-import '../screen/SurveyScreen.dart'; // Impor SurveyScreen*/
+import '../screen/SurveyScreen.dart'; // Impor SurveyScreen
 
 class HomeListButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      // Membungkus seluruh konten agar bisa digulir
       child: Container(
         margin: EdgeInsets.all(10),
         padding: EdgeInsets.fromLTRB(
           14,
-          8,
-          16,
-          27,
+          0,
+          14,
+          0,
         ), // Menambah padding di atas, mengurangi di bawah
         decoration: BoxDecoration(
           color: Colors.white, // Warna latar belakang
@@ -39,6 +38,7 @@ class HomeListButton extends StatelessWidget {
               NeverScrollableScrollPhysics(), // Menonaktifkan menggulir di GridView
           mainAxisSpacing: 16, // Mengurangi jarak antar baris
           crossAxisSpacing: 16, // Jarak antar kolom
+          padding: EdgeInsets.only(top: 20, bottom: 20),
           children: [
             buildMenuItem(context, Icons.calendar_today, 'Kegiatan Terdekat'),
             buildMenuItem(context, Icons.bar_chart, 'Laporan Keuangan'),
@@ -63,36 +63,27 @@ class HomeListButton extends StatelessWidget {
         } else if (label == 'Laporan Keuangan') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => KegiatanScreen()),
-            // MaterialPageRoute(builder: (context) => LaporanKeuanganScreen()),
+            MaterialPageRoute(builder: (context) => LaporanKeuanganScreen()),
           );
         } else if (label == 'Digital Library') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => KegiatanScreen()),
-            /*MaterialPageRoute(
-              builder: (context) => DigilibScreen(),
-            ),*/
+            MaterialPageRoute(builder: (context) => DigilibScreen()),
           );
         } else if (label == 'Survey Berjalan') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => KegiatanScreen()),
-            /* MaterialPageRoute(
-              builder: (context) => SurveyScreen(),
-            ),*/
+            MaterialPageRoute(builder: (context) => SurveyScreen()),
           );
         } else if (label == 'Hasil Survey') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => KegiatanScreen()),
-            /*MaterialPageRoute(builder: (context) => HasilSurveyScreen()),*/
+            MaterialPageRoute(builder: (context) => HasilSurveyScreen()),
           );
         } else if (label == 'Produk Usaha') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => KegiatanScreen()),
-            /* MaterialPageRoute(builder: (context) => KatalogScreen()),*/
+            MaterialPageRoute(builder: (context) => KatalogScreen()),
           );
         }
 

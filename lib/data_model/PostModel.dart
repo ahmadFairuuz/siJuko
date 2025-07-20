@@ -30,20 +30,10 @@ class PostModel {
           json['_embedded']['author'][0]['name'] ??
           'Unknown', // Menambahkan default 'Unknown'
       imageUrl:
-          (json['_embedded'] != null &&
-              json['_embedded']['wp:featuredmedia'] != null &&
-              json['_embedded']['wp:featuredmedia'] is List &&
-              json['_embedded']['wp:featuredmedia'].isNotEmpty &&
-              json['_embedded']['wp:featuredmedia'][0]['media_details'] !=
-                  null &&
-              json['_embedded']['wp:featuredmedia'][0]['media_details']['sizes'] !=
-                  null &&
-              json['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['thumbnail'] !=
-                  null &&
-              json['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['thumbnail']['source_url'] !=
-                  null)
-          ? json['_embedded']['wp:featuredmedia'][0]['media_details']['sizes']['thumbnail']['source_url']
-          : 'https://kopmaunila.com/panel/img/logo-kopma-unila.png',
+          json['_embedded']?['wp:featuredmedia']?[0]?['media_details']?['sizes']?['thumbnail']?['source_url'] ??
+          json['_embedded']?['wp:featuredmedia']?[0]?['source_url'] // fallback jika thumbnail tidak ada
+          ??
+          'https://kopmaunila.com/panel/img/logo-kopma-unila.png',
     );
   }
 }
