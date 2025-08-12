@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
@@ -15,6 +18,7 @@ class FirebaseApi {
     FirebaseMessaging.onMessage.listen((message) async {
       final notification = message.notification;
       if (notification != null) {
+        await _saveNotification(notification); // simpan di foreground
         showFlutterNotification(notification);
       }
     });
@@ -44,5 +48,42 @@ class FirebaseApi {
       notification.body,
       notificationDetails,
     );
+  }
+
+  Future<void> _saveNotification(RemoteNotification notification) async {
+    print("📩 Menyimpan notifikasi: ${notification.title}");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? stored = prefs.getString('notifications');
+    List<Map<String, dynamic>> notifList = [];
+
+    if (stored != null) {
+      notifList = List<Map<String, dynamic>>.from(json.decode(stored));
+    }
+
+    notifList.insert(0, {
+      'title': notification.title ?? 'Tanpa Judul',
+      'body': notification.body ?? '',
+      'time': DateTime.now().toString(),
+    });
+
+    // Batasi max 50 notifikasi
+    if (notifList.length > 50) notifList = notifList.sublist(0, 50);
+
+    prefs.setString('notifications', json.encode(notifList));
+  }
+
+  static Future<List<Map<String, dynamic>>> getStoredNotifications() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? stored = prefs.getString('notifications');
+    if (stored != null) {
+      return List<Map<String, dynamic>>.from(json.decode(stored));
+    }
+    return [];
+  }
+
+  Future<void> saveNotificationFromBackground(
+    RemoteNotification notification,
+  ) async {
+    await _saveNotification(notification);
   }
 }

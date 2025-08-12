@@ -13,17 +13,18 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
     print('Title: ${message.notification?.title}');
     print('Body: ${message.notification?.body}');
     print('Payload: ${message.data}');
+    await FirebaseApi().saveNotificationFromBackground(notification);
   }
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseApi().initNotification();
 
   // ✅ HARUS dipanggil sebelum runApp
   FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
 
+  await FirebaseApi().initNotification();
   runApp(MyApp());
 }
 

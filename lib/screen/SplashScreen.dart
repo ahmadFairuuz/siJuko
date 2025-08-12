@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'WelcomeScreen.dart'; // Import WelcomeScreen
 
 class SplashScreen extends StatelessWidget {
@@ -14,7 +15,10 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Image.asset('assets/image/juko_merah.png', width: 150), // Ganti dengan asset logo yang sesuai
+        child: Image.asset(
+          'assets/image/juko_merah.png',
+          width: 150,
+        ), // Ganti dengan asset logo yang sesuai
       ),
     );
   }
