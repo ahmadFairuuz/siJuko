@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../data_model/LapkeuModel.dart';
-import '../screen/PdfViewScreen.dart'; // Pastikan Anda mengimpor PdfViewScreen
 
 class LaporanKeuanganItem extends StatelessWidget {
   final LaporanKeuanganModel dataLaporan;
@@ -15,16 +15,10 @@ class LaporanKeuanganItem extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          // Navigasi ke PdfViewScreen dan mengirimkan link PDF
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PDFViewScreen(
-                url: dataLaporan.link,
-              ), // Kirimkan URL ke PdfViewScreen
-            ),
-          );
+        onTap: () async {
+          if (!await launchUrl(Uri.parse(dataLaporan.link))) {
+            throw Exception('Could not launch ${dataLaporan.link}');
+          }
         },
         child: Container(
           width: MediaQuery.of(context).size.width,

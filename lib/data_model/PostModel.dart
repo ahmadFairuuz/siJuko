@@ -28,7 +28,7 @@ class PostModel {
       date: json['date'],
       author:
           json['_embedded']['author'][0]['name'] ??
-          'Unknown', // Menambahkan default 'Unknown'
+          'Teknologi Kopma Unila', // Menambahkan default 'Unknown'
       imageUrl:
           json['_embedded']?['wp:featuredmedia']?[0]?['media_details']?['sizes']?['thumbnail']?['source_url'] ??
           json['_embedded']?['wp:featuredmedia']?[0]?['source_url'] // fallback jika thumbnail tidak ada
