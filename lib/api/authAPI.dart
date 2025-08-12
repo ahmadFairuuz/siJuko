@@ -38,13 +38,25 @@ class AuthApi {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var data = {'username': username, 'password': password};
 
-    final response = await http.post(Uri.parse(LOGIN_URL), body: data);
+    final response = await http.post(
+      Uri.parse(LOGIN_URL),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) FlutterApp',
+      },
+      body: data,
+    );
+
+    print("Status Code: ${response.statusCode}");
+    print("Response Body: ${response.body}");
 
     final Map<String, dynamic> responseData = json.decode(
       response.body.toString(),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && responseData.containsKey('data')) {
+      final Map<String, dynamic> responseData = json.decode(response.body);
       sharedPreferences.setString('nama', responseData['data']['nama']);
       sharedPreferences.setString(
         'nomor_anggota',
@@ -52,6 +64,8 @@ class AuthApi {
       );
       sharedPreferences.setString('username', responseData['data']['username']);
       sharedPreferences.setString('jurusan', responseData['data']['jurusan']);
+    } else {
+      print("Login gagal: ${responseData['message'] ?? 'Unknown error'}");
     }
 
     return responseData;
