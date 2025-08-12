@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:jukover7/api/authApi.dart'; // Pastikan path ini benar
-import 'package:jukover7/screen/LoginScreen.dart'; // Ganti dengan path yang sesuai
+
+import '../api/authApi.dart'; // Pastikan path ini benar
+import '../screen/LoginScreen.dart'; // Ganti dengan path yang sesuai
 
 class DaftarScreen extends StatefulWidget {
   @override

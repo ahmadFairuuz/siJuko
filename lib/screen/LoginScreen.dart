@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jukover7/api/authAPI.dart';
-import 'package:jukover7/screen/HomeScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../api/authAPI.dart';
+import '../screen/HomeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sijuko_newapp/component/HasilSurveyListItem.dart';
-import 'package:sijuko_newapp/data_model/HasilSurveyModel.dart';
-import 'package:sijuko_newapp/api/HasilSurveyAPI.dart';
+
+import '../api/HasilSurveyAPI.dart';
+import '../component/HasilSurveyListItem.dart';
+import '../data_model/HasilSurveyModel.dart';
 
 class HasilSurveyScreen extends StatefulWidget {
   const HasilSurveyScreen({Key? key}) : super(key: key);
@@ -46,7 +46,10 @@ class _HasilSurveyScreenState extends State<HasilSurveyScreen> {
       appBar: AppBar(
         title: Text(
           'Hasil Survey',
-          style: GoogleFonts.poppins(color: Colors.black), // Menggunakan font Poppins dengan warna hitam
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.black,
+          ), // Menggunakan font Poppins dengan warna hitam
         ),
       ),
       body: FutureBuilder(
@@ -63,24 +66,20 @@ class _HasilSurveyScreenState extends State<HasilSurveyScreen> {
                   child: ListView.separated(
                     itemBuilder: (context, index) {
                       return HasilSurveyListItem(
-                          dataLaporan: snapshot.data![index]);
+                        dataLaporan: snapshot.data![index],
+                      );
                     },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 10,
-                    ),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
                     itemCount: hasilSurvey.length,
                   ),
                 ),
               );
             } else {
-              return const Center(
-                child: Text('Tidak ada data'),
-              );
+              return const Center(child: Text('Tidak ada data'));
             }
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

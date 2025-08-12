@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sijuko_newapp/api/DigilibAPI.dart';
-import 'package:sijuko_newapp/component/DigilibList.dart';
-import 'package:sijuko_newapp/data_model/DigilibModel.dart';
+
+import '../api/DigilibAPI.dart';
+import '../component/DigilibList.dart';
+import '../data_model/DigilibModel.dart';
 
 class DigilibScreen extends StatefulWidget {
   const DigilibScreen({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _DigilibScreenState extends State<DigilibScreen> {
       appBar: AppBar(
         title: Text(
           'Digital Library',
-          style: GoogleFonts.poppins(), // Menggunakan font Poppins
+          style: TextStyle(fontFamily: 'Poppins'), // Menggunakan font Poppins
         ),
       ),
       body: FutureBuilder(
@@ -63,24 +63,20 @@ class _DigilibScreenState extends State<DigilibScreen> {
                   child: ListView.separated(
                     itemBuilder: (context, index) {
                       return DigilibListItem(
-                          dataDigilib: snapshot.data![index]);
+                        dataDigilib: snapshot.data![index],
+                      );
                     },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 10,
-                    ),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
                     itemCount: digitalLibrary.length,
                   ),
                 ),
               );
             } else {
-              return const Center(
-                child: Text('Tidak ada data'),
-              );
+              return const Center(child: Text('Tidak ada data'));
             }
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

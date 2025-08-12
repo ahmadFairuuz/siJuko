@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jukover7/data_model/PostModel.dart';
-import 'package:jukover7/screen/ViewPostScreen.dart';
+
+import '../data_model/PostModel.dart';
+import '../screen/ViewPostScreen.dart';
 
 class PostItem extends StatelessWidget {
   final PostModel post;

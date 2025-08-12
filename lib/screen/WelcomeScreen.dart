@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jukover7/screen/DaftarScreen.dart';
-import 'package:jukover7/screen/LoginScreen.dart';
+
+import '../screen/DaftarScreen.dart';
+import '../screen/LoginScreen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -15,15 +16,20 @@ class WelcomeScreen extends StatelessWidget {
               bottom: 200,
               child: Image.asset(
                 "assets/image/juko_merah.png",
-                width: MediaQuery.of(context).size.width * 0.9, // 90% lebar layar
+                width:
+                    MediaQuery.of(context).size.width * 0.9, // 90% lebar layar
                 fit: BoxFit.contain,
               ),
             ),
             Positioned(
               left: 16,
-              top: MediaQuery.of(context).size.height * 0.3, // Menyesuaikan posisi vertikal teks
+              top:
+                  MediaQuery.of(context).size.height *
+                  0.3, // Menyesuaikan posisi vertikal teks
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.5, // Lebar maksimum teks
+                width:
+                    MediaQuery.of(context).size.width *
+                    0.5, // Lebar maksimum teks
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -39,7 +45,9 @@ class WelcomeScreen extends StatelessWidget {
                           TextSpan(text: "Halo "), // Teks biasa
                           TextSpan(
                             text: "Coopers!", // Teks dengan warna berbeda
-                            style: TextStyle(color: Colors.green[900]), // Warna hijau untuk "Coopers"
+                            style: TextStyle(
+                              color: Colors.green[900],
+                            ), // Warna hijau untuk "Coopers"
                           ),
                         ],
                       ),
@@ -54,14 +62,20 @@ class WelcomeScreen extends StatelessWidget {
                           color: Colors.black, // Warna teks default
                         ),
                         children: <TextSpan>[
-                          TextSpan(text: "Selamat datang di\nAplikasi "), // Teks biasa
+                          TextSpan(
+                            text: "Selamat datang di\nAplikasi ",
+                          ), // Teks biasa
                           TextSpan(
                             text: "Si Juko", // Teks dengan warna berbeda
-                            style: TextStyle(color: Colors.green[900], fontWeight: FontWeight.bold), // Warna hijau untuk "Si Juko"
+                            style: TextStyle(
+                              color: Colors.green[900],
+                              fontWeight: FontWeight.bold,
+                            ), // Warna hijau untuk "Si Juko"
                           ),
                         ],
                       ),
-                      textAlign: TextAlign.center, // Menyelaraskan teks ke tengah
+                      textAlign:
+                          TextAlign.center, // Menyelaraskan teks ke tengah
                     ),
                   ],
                 ),
@@ -78,7 +92,9 @@ class WelcomeScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        _noAnimationRoute(DaftarScreen()), // Pindah ke halaman Daftar tanpa animasi
+                        _noAnimationRoute(
+                          DaftarScreen(),
+                        ), // Pindah ke halaman Daftar tanpa animasi
                       );
                     },
                     child: Text(
@@ -91,7 +107,10 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green[900],
-                      minimumSize: Size(200, 40), // Mengurangi panjang shape tombol
+                      minimumSize: Size(
+                        200,
+                        40,
+                      ), // Mengurangi panjang shape tombol
                     ),
                   ),
                   SizedBox(height: 10),
@@ -99,7 +118,9 @@ class WelcomeScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        _noAnimationRoute(LoginScreen()), // Pindah ke halaman Login tanpa animasi
+                        _noAnimationRoute(
+                          LoginScreen(),
+                        ), // Pindah ke halaman Login tanpa animasi
                       );
                     },
                     child: Text(
@@ -111,9 +132,13 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.green[900], backgroundColor: Colors.green[900],
+                      foregroundColor: Colors.green[900],
+                      backgroundColor: Colors.green[900],
                       side: BorderSide(color: Colors.green),
-                      minimumSize: Size(200, 40), // Mengurangi panjang shape tombol
+                      minimumSize: Size(
+                        200,
+                        40,
+                      ), // Mengurangi panjang shape tombol
                     ),
                   ),
                 ],
@@ -130,7 +155,8 @@ class WelcomeScreen extends StatelessWidget {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionDuration: Duration.zero, // Menghapus animasi transisi
-      reverseTransitionDuration: Duration.zero, // Menghapus animasi transisi saat kembali
+      reverseTransitionDuration:
+          Duration.zero, // Menghapus animasi transisi saat kembali
     );
   }
 }

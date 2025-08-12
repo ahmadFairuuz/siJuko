@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-// import 'package:jukover7/screen/BiodataScreen.dart';
-// import 'package:jukover7/screen/NotificationScreen.dart';
-// import 'package:jukover7/screen/ProfileScreen.dart';
-// import 'package:jukover7/screen/QrScreen.dart';
 import '../data_model/HomeData.dart';
 import '../screen/AllPostScreen.dart';
 import '../screen/HomeScreen.dart';
+import '../screen/NotificationScreen.dart';
+import '../screen/ProfileScreen.dart';
+import '../screen/QrScreen.dart';
 
 class BottomNavigation extends StatelessWidget {
   final int selectedIndex;
@@ -62,33 +61,24 @@ class BottomNavigation extends StatelessWidget {
           } else if (index == 2) {
             Navigator.push(
               context,
-              // MaterialPageRoute(builder: (context) => const QrScreen()),
-              MaterialPageRoute(
-                builder: (context) => AllPostScreen(homeData: homeData),
-              ),
+              MaterialPageRoute(builder: (context) => const QrScreen()),
             );
           } else if (index == 3) {
             Navigator.push(
               context,
-              /*MaterialPageRoute(
+              MaterialPageRoute(
                 builder: (context) => NotificationScreen(
                   homeData: homeData,
-                  selectedIndex: selectedIndex,
-                  onItemTapped: (int) {},
+                  selectedIndex: 3, // ✅ atur index ke 3
+                  onItemTapped: onItemTapped, // ✅ kirim fungsi yang benar
                 ),
-              ),*/
-              MaterialPageRoute(
-                builder: (context) => AllPostScreen(homeData: homeData),
               ),
             );
           } else if (index == 4) {
             Navigator.push(
               context,
-              /*MaterialPageRoute(
-                builder: (context) => ProfileTab(homeData: homeData),
-              ),*/
               MaterialPageRoute(
-                builder: (context) => AllPostScreen(homeData: homeData),
+                builder: (context) => ProfileTab(homeData: homeData),
               ),
             );
           } else {

@@ -1,5 +1,5 @@
-import 'package:jukover7/data_model/PostModel.dart';
-import 'package:jukover7/data_model/SimpananPoin.dart';
+import '../data_model/PostModel.dart';
+import '../data_model/SimpananPoin.dart';
 
 class HomeData {
   List<PostModel> posts;

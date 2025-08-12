@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
-import 'package:jukover7/data_model/PostModel.dart';
+
+import '../data_model/PostModel.dart';
 
 class ViewPostScreen extends StatefulWidget {
   final PostModel post;

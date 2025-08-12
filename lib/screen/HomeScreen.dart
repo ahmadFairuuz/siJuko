@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jukover7/api/GetPostPoin.dart';
-import 'package:jukover7/component/HomeListButton.dart';
-import 'package:jukover7/component/PostItem.dart';
-import 'package:jukover7/data_model/HomeData.dart';
-import 'package:jukover7/screen/AllPostScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../api/GetPostPoin.dart';
 import '../component/BottomNavigation.dart';
+import '../component/HomeListButton.dart';
+import '../component/PostItem.dart';
+import '../data_model/HomeData.dart';
 import '../data_model/SimpananPoin.dart';
+import '../screen/AllPostScreen.dart';
+import '../screen/BayarSimpananScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -52,13 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     switch (index) {
-      case 0: // Home
+      case 0:
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeScreen()),
         );
         break;
-      case 1: // Post
+      case 1:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -66,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
         break;
-      // Tambahkan case lain untuk QR, Notification, Profile jika ada
       default:
         break;
     }
@@ -102,92 +102,99 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(width: 16),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Selamat Datang!',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Selamat Datang!',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontFamily: 'Poppins',
+                                      color: Colors.white,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      nama,
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    nama,
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
-                                    SizedBox(width: 8),
-                                    FutureBuilder<HomeData>(
-                                      // FutureBuilder untuk menampilkan poin
-                                      future: homeData,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return Text(
-                                            'Poin: ...',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: 'Poppins',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
+                                  SizedBox(height: 4),
+                                  FutureBuilder<HomeData>(
+                                    future: homeData,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Text(
+                                          'Poin: ...',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        );
+                                      } else if (snapshot.hasError) {
+                                        return Text(
+                                          'Poin: Error',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        );
+                                      } else if (snapshot.hasData) {
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.monetization_on,
                                               color: Colors.white,
+                                              size: 14,
                                             ),
-                                          );
-                                        } else if (snapshot.hasError) {
-                                          return Text(
-                                            'Poin: Error',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                            ),
-                                          );
-                                        } else if (snapshot.hasData) {
-                                          return Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 20.0,
-                                              top: 10.0,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.monetization_on,
+                                            SizedBox(width: 4),
+                                            Flexible(
+                                              child: Text(
+                                                '${snapshot.data!.simpananPoin.poin}',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontFamily: 'Poppins',
                                                   color: Colors.white,
-                                                  size: 14,
                                                 ),
-                                                SizedBox(width: 5),
-                                                Text(
-                                                  '${snapshot.data!.simpananPoin.poin}',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ],
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
                                             ),
-                                          );
-                                        } else {
-                                          return Text(
-                                            'Poin: 0',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              fontFamily: 'Poppins',
-                                              color: Colors.white,
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                          ],
+                                        );
+                                      } else {
+                                        return Text(
+                                          'Poin: 0',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -236,7 +243,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .simpananPoin
                                       .tagihan
                                       .toString();
-
                                   return Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -260,28 +266,73 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.symmetric(
                                 vertical: 16.0,
                               ),
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                child: Text(
-                                  'Bayar Tagihan',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Poppins',
-                                    color: Colors.white,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  // Tombol Bayar Tagihan
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => BayarScreen(),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green[900],
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 12,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Bayar Tagihan',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.green[900],
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 30,
-                                    vertical: 10,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                ),
+
+                                  // Tombol Riwayat Tagihan
+                                  // ElevatedButton(
+                                  //   onPressed: () {
+                                  //     Navigator.push(
+                                  //       context,
+                                  //       MaterialPageRoute(
+                                  //         builder: (context) => HomeScreen(),
+                                  //       ),
+                                  //     );
+                                  //   },
+                                  //   style: ElevatedButton.styleFrom(
+                                  //     backgroundColor: Colors.grey[800],
+                                  //     padding: const EdgeInsets.symmetric(
+                                  //       horizontal: 20,
+                                  //       vertical: 12,
+                                  //     ),
+                                  //     shape: RoundedRectangleBorder(
+                                  //       borderRadius: BorderRadius.circular(20),
+                                  //     ),
+                                  //   ),
+                                  //   child: const Text(
+                                  //     'Riwayat Tagihan',
+                                  //     style: TextStyle(
+                                  //       fontSize: 16,
+                                  //       fontFamily: 'Poppins',
+                                  //       color: Colors.white,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
                               ),
                             ),
+
                             HomeListButton(),
                             Padding(
                               padding: const EdgeInsets.symmetric(
@@ -297,12 +348,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 16,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.white,
+                                      color: Colors.green[900],
                                     ),
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      // Navigasi ke AllPostView
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -310,7 +360,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                             homeData: homeData!,
                                           ),
                                         ),
-                                        // Arahkan ke AllPostView
                                       );
                                     },
                                     style: TextButton.styleFrom(
@@ -333,7 +382,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             FutureBuilder<HomeData>(
-                              // Menampilkan post terbaru
                               future: homeData,
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
@@ -345,20 +393,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return Center(
                                     child: Text('Error: ${snapshot.error}'),
                                   );
-                                } else if (snapshot.hasData) {
-                                  if (snapshot.data!.posts.isNotEmpty) {
-                                    return PostItem(
-                                      post: snapshot.data!.posts[0],
-                                    );
-                                  } else {
-                                    return Center(
-                                      child: Text("Tidak ada post"),
-                                    );
-                                  }
+                                } else if (snapshot.hasData &&
+                                    snapshot.data!.posts.isNotEmpty) {
+                                  return PostItem(
+                                    post: snapshot.data!.posts[0],
+                                  );
+                                } else {
+                                  return Center(child: Text("Tidak ada post"));
                                 }
-                                return const Center(
-                                  child: Text("Tidak ada data."),
-                                );
                               },
                             ),
                           ],
@@ -374,9 +416,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onItemTapped: _onItemTapped,
         homeData:
             homeData ??
-            Future.value(
-              HomeData(posts: [], simpananPoin: SimpananPoin()),
-            ), // Menyediakan nilai default jika null
+            Future.value(HomeData(posts: [], simpananPoin: SimpananPoin())),
       ),
     );
   }

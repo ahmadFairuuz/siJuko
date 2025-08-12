@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-// import 'package:jukover7/screen/QrScreen.dart';
 import '../component/BottomNavigation.dart';
 import '../component/PostItem.dart';
 import '../data_model/HomeData.dart';
+import '../screen/QrScreen.dart';
 import 'HomeScreen.dart';
 
 class AllPostScreen extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jukover7/data_model/KegiatanModel.dart';
+
+import '../data_model/KegiatanModel.dart';
 
 class KegiatanItem extends StatelessWidget {
   final KegiatanModel dataKegiatan;

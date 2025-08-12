@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:google_fonts/google_fonts.dart'; // Import font Poppins
 
 import '../api/KatalogAPI.dart';
 import '../component/KatalogUsahaItem.dart';
@@ -47,10 +46,13 @@ class _KatalogScreenState extends State<KatalogScreen> {
       appBar: AppBar(
         title: Text(
           'Katalog Usaha',
-          style: GoogleFonts.poppins(color: Colors.white), // Menggunakan font Poppins
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.white,
+          ), // Menggunakan font Poppins
         ),
         backgroundColor: Colors.green[900],
-        iconTheme: IconThemeData(color: Colors.white),// Warna hijau [900]
+        iconTheme: IconThemeData(color: Colors.white), // Warna hijau [900]
       ),
       body: Container(
         padding: EdgeInsets.all(10),
@@ -76,10 +78,11 @@ class _KatalogScreenState extends State<KatalogScreen> {
                   onRefresh: _refresh,
                   child: GridView.builder(
                     itemCount: snapshot.data!.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.8,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.8,
+                        ),
                     itemBuilder: (context, index) {
                       return KatalogUsahaCardItem(
                         katalogModel: snapshot.data![index],
@@ -91,14 +94,15 @@ class _KatalogScreenState extends State<KatalogScreen> {
                 return Center(
                   child: Text(
                     'Tidak ada produk',
-                    style: GoogleFonts.poppins(fontSize: 16), // Menggunakan Poppins
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Poppins',
+                    ), // Menggunakan Poppins
                   ),
                 );
               }
             } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: CircularProgressIndicator());
             }
           },
         ),

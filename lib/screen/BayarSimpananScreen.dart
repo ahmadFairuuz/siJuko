@@ -1,0 +1,284 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../api/SimwaAPI.dart';
+
+class BayarScreen extends StatefulWidget {
+  const BayarScreen({super.key});
+
+  @override
+  State<BayarScreen> createState() => _BayarScreenState();
+}
+
+class _BayarScreenState extends State<BayarScreen> {
+  final _formKey = GlobalKey<FormState>();
+  File? _image;
+  ImagePicker picker = ImagePicker();
+  var _waiting = false;
+
+  void _setWait() {
+    setState(() {
+      _waiting = !_waiting;
+    });
+  }
+
+  TextEditingController _nominalController = TextEditingController();
+
+  Future<void> _pickImage() async {
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = File(image!.path);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Bayar Simpanan", style: TextStyle(color: Colors.white)),
+        backgroundColor: Colors.green[900],
+        iconTheme: IconThemeData(color: Colors.white),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: !_waiting
+            ? SingleChildScrollView(
+                child: Form(
+                  child: Column(
+                    children: [
+                      Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            'https://kopmaunila.com/panel/img/bank_bayar_simwa.jpg',
+                            width: MediaQuery.of(context).size.width,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Isikan Nominal yang dibayarkan',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Poppins',
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey.shade300),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          children: [
+                            Text("Rp", style: TextStyle(fontSize: 18)),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _nominalController,
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(fontSize: 22),
+                                decoration: InputDecoration(
+                                  hintText: "0",
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Upload Bukti Pembayaran (Max 1 File)',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Poppins',
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 8),
+
+                      GestureDetector(
+                        onTap: _pickImage,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey.shade300),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: const [
+                                  Icon(Icons.image, color: Colors.black),
+                                  Spacer(), // Mengisi ruang di antara kedua ikon
+                                  Icon(Icons.add_circle, color: Colors.green),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              if (_image != null)
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.symmetric(),
+                                  child: Image.file(
+                                    _image!,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () async {
+                            if (_nominalController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Nominal tidak boleh kosong"),
+                                ),
+                              );
+                              return;
+                            }
+                            if (_image == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "Bukti pembayaran tidak boleh kosong",
+                                  ),
+                                ),
+                              );
+                              return;
+                            }
+
+                            var angka = num.tryParse(_nominalController.text);
+
+                            if (angka == null) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Nominal harus berupa angka"),
+                                ),
+                              );
+                              return;
+                            }
+
+                            if (angka < 10000) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Nominal minimal Rp 10.000"),
+                                ),
+                              );
+                              return;
+                            }
+
+                            _setWait();
+                            Map<String, dynamic> response =
+                                await SimwaApi.bayarSimwa(
+                                  _nominalController.text,
+                                  _image!.path,
+                                );
+                            _setWait();
+
+                            if (response['status']) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Berhasil"),
+                                    content: Text(
+                                      'Pembayaran berhasil silakan menunggu konfirmasi dari tim bidang keuangan',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Gagal"),
+                                    content: Text(
+                                      'Pembayaran gagal dilakukan mohon periksa kembali data yang dimasukkan',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                              top: 16,
+                              right: 16,
+                              left: 16,
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+              )
+            : const Center(child: CircularProgressIndicator()),
+      ),
+    );
+  }
+}

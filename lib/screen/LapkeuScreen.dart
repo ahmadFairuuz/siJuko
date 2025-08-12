@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sijuko_newapp/api/LapkeuAPI.dart';
-import 'package:sijuko_newapp/component/LapkeuListItem.dart';
-import 'package:sijuko_newapp/data_model/LapkeuModel.dart';
+
+import '../api/LapkeuAPI.dart';
+import '../component/LapkeuListItem.dart';
+import '../data_model/LapkeuModel.dart';
 
 class LaporanKeuanganScreen extends StatefulWidget {
   @override
@@ -12,8 +12,9 @@ class LaporanKeuanganScreen extends StatefulWidget {
 
 class _LaporanKeuanganScreenState extends State<LaporanKeuanganScreen> {
   Future<List<LaporanKeuanganModel>> dataLaporan = Future.value([]);
-  RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
+  RefreshController _refreshController = RefreshController(
+    initialRefresh: false,
+  );
 
   @override
   void initState() {
@@ -40,7 +41,10 @@ class _LaporanKeuanganScreenState extends State<LaporanKeuanganScreen> {
       appBar: AppBar(
         title: Text(
           'Laporan Keuangan',
-          style: GoogleFonts.poppins(color: Colors.black), // Menggunakan font Poppins dengan warna hitam
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            color: Colors.black,
+          ), // Menggunakan font Poppins dengan warna hitam
         ),
       ),
       body: FutureBuilder(
@@ -56,24 +60,19 @@ class _LaporanKeuanganScreenState extends State<LaporanKeuanganScreen> {
                   onRefresh: _refreshData,
                   enablePullUp: true,
                   child: ListView.separated(
-                      itemBuilder: (context, index) => LaporanKeuanganItem(
-                          dataLaporan: snapshot.data![index]),
-                      separatorBuilder: (context, index) => Container(
-                        height: 1,
-                        color: Colors.black26,
-                      ),
-                      itemCount: snapshot.data!.length),
+                    itemBuilder: (context, index) =>
+                        LaporanKeuanganItem(dataLaporan: snapshot.data![index]),
+                    separatorBuilder: (context, index) =>
+                        Container(height: 1, color: Colors.black26),
+                    itemCount: snapshot.data!.length,
+                  ),
                 ),
               );
             } else {
-              return const Center(
-                child: Text('Tidak ada data laporan'),
-              );
+              return const Center(child: Text('Tidak ada data laporan'));
             }
           } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),

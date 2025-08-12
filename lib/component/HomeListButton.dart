@@ -12,11 +12,11 @@ class HomeListButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.all(10),
+        margin: EdgeInsets.all(0),
         padding: EdgeInsets.fromLTRB(
-          14,
+          5,
           0,
-          14,
+          5,
           0,
         ), // Menambah padding di atas, mengurangi di bawah
         decoration: BoxDecoration(

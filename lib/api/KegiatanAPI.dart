@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:jukover7/api/ConfigAPI.dart';
-import 'package:jukover7/data_model/KegiatanModel.dart';
+
+import '../api/ConfigAPI.dart';
+import '../data_model/KegiatanModel.dart';
 
 class KegiatanApi {
   static Future<List<KegiatanModel>> getKegiatan() async {

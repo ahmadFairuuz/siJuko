@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jukover7/api/KegiatanAPI.dart';
-import 'package:jukover7/component/KegiatanListItem.dart';
-import 'package:jukover7/data_model/KegiatanModel.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import '../api/KegiatanAPI.dart';
+import '../component/KegiatanListItem.dart';
+import '../data_model/KegiatanModel.dart';
 
 class KegiatanScreen extends StatefulWidget {
   const KegiatanScreen({Key? key}) : super(key: key);
