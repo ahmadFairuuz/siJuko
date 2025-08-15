@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "869384359568",
+    "project_id": "sijuko-notification",
+    "storage_bucket": "sijuko-notification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869384359568:android:ca82f7a56306a232ba5215",
+        "android_client_info": {
+          "package_name": "com.example.jukover7"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeWekqukuz5ZHlQ8UrHbm4oWTLIfQAYTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

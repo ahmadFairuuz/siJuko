@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+//import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PDFViewScreen extends StatelessWidget {
   final String url;
@@ -15,7 +15,6 @@ class PDFViewScreen extends StatelessWidget {
           style: TextStyle(fontFamily: 'Poppins'), // Menggunakan font Poppins
         ),
       ),
-      body: SfPdfViewer.network(url),
     );
   }
 }
