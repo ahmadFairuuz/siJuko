@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:jukover7/screen/SplashScreen.dart' show SplashScreen;
+import 'package:path_provider/path_provider.dart';
 
 import '../api/FirebaseAPI.dart';
 import 'data_model/NotificationModel.dart';
@@ -12,7 +13,9 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  await Hive.initFlutter();
+  final dir = await getApplicationDocumentsDirectory();
+  print("📂 Hive BG path: ${dir.path}");
+  Hive.init(dir.path);
 
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(NotificationModelAdapter());
@@ -28,6 +31,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
 
   print("✅ Notifikasi tersimpan (background): ${message.notification?.title}");
+  print("📊 Jumlah item di box (BG): ${box.length}");
 }
 
 // @pragma('vm:entry-point')
@@ -49,7 +53,10 @@ void main() async {
   // Init Firebase
   await Firebase.initializeApp();
 
-  await Hive.initFlutter();
+  final dir = await getApplicationDocumentsDirectory();
+  print("📂 Hive MAIN path: ${dir.path}");
+  Hive.init(dir.path);
+
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(NotificationModelAdapter());
   }
@@ -75,22 +82,22 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // Listener untuk notifikasi foreground
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      final box = Hive.box<NotificationModel>('notifications');
-
-      box.add(
-        NotificationModel(
-          title: message.notification?.title ?? "No Title",
-          body: message.notification?.body ?? "No Body",
-          timestamp: DateTime.now(),
-        ),
-      );
-
-      print(
-        "✅ Notifikasi tersimpan (foreground): ${message.notification?.title}",
-      );
-    });
+    // // Listener untuk notifikasi foreground
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    //   final box = Hive.box<NotificationModel>('notifications');
+    //
+    //   box.add(
+    //     NotificationModel(
+    //       title: message.notification?.title ?? "No Title",
+    //       body: message.notification?.body ?? "No Body",
+    //       timestamp: DateTime.now(),
+    //     ),
+    //   );
+    //
+    //   print(
+    //     "✅ Notifikasi tersimpan (foreground): ${message.notification?.title}",
+    //   );
+    // });
   }
 
   @override

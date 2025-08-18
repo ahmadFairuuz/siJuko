@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "869384359568",
-    "project_id": "sijuko-notification",
-    "storage_bucket": "sijuko-notification.firebasestorage.app"
+    "project_number": "491495315812",
+    "project_id": "si-juko-2025",
+    "storage_bucket": "si-juko-2025.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:869384359568:android:ca82f7a56306a232ba5215",
+        "mobilesdk_app_id": "1:491495315812:android:f1bc47663dc1bd99ca0271",
         "android_client_info": {
           "package_name": "com.kopmaul.sijuko"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDeWekqukuz5ZHlQ8UrHbm4oWTLIfQAYTc"
+          "current_key": "AIzaSyAs9cmA6cGG1nhlL_BrNoUJ5Dd2fJGN7wM"
         }
       ],
       "services": {

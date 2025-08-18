@@ -9,7 +9,7 @@ plugins {
 
 dependencies {
     // Import the Firebase BoM
-    implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.1.0"))
 
 
     // TODO: Add the dependencies for Firebase products you want to use
@@ -45,7 +45,7 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.kopmaul.sijuko"
         //minSdk = flutter.minSdkVersion
-        minSdk = 23
+        minSdk = 29
         targetSdk = flutter.targetSdkVersion
         versionCode = 13
         versionName = "7.0.1"
