@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PDFViewScreen extends StatelessWidget {
   final String url;
 
-  const PDFViewScreen({Key? key, required this.url}) : super(key: key);
+  const PDFViewScreen({super.key, required this.url});
 
   @override
   Widget build(BuildContext context) {

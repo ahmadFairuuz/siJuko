@@ -6,7 +6,7 @@ import '../data_model/BiodataModel.dart';
 import '../screen/EditBioDataScreen.dart';
 
 class BiodataScreen extends StatefulWidget {
-  BiodataScreen({super.key});
+  const BiodataScreen({super.key});
 
   @override
   _BiodataScreenState createState() => _BiodataScreenState();

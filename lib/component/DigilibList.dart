@@ -8,7 +8,7 @@ class DigilibListItem extends StatelessWidget {
   final DigilibModel dataDigilib;
   DateFormat dateFormat = DateFormat('dd MMMM');
 
-  DigilibListItem({Key? key, required this.dataDigilib}) : super(key: key);
+  DigilibListItem({super.key, required this.dataDigilib});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class DigilibListItem extends StatelessWidget {
                   children: [
                     Text(
                       dataDigilib.judul.length >= 30
-                          ? dataDigilib.judul.substring(0, 30) + '...'
+                          ? '${dataDigilib.judul.substring(0, 30)}...'
                           : dataDigilib.judul,
                       style: TextStyle(
                         fontSize: 16,
@@ -65,7 +65,7 @@ class DigilibListItem extends StatelessWidget {
                     ), // Jarak antar judul dan deskripsi
                     Text(
                       dataDigilib.deskripsi.length >= 40
-                          ? dataDigilib.deskripsi.substring(0, 40) + '...'
+                          ? '${dataDigilib.deskripsi.substring(0, 40)}...'
                           : dataDigilib.deskripsi,
                       style: TextStyle(
                         fontSize: 14,

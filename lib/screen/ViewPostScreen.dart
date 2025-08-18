@@ -7,7 +7,7 @@ import '../data_model/PostModel.dart';
 class ViewPostScreen extends StatefulWidget {
   final PostModel post;
 
-  const ViewPostScreen({Key? key, required this.post}) : super(key: key);
+  const ViewPostScreen({super.key, required this.post});
 
   @override
   _ViewPostScreenState createState() => _ViewPostScreenState();

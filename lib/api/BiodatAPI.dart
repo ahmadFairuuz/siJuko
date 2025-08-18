@@ -10,14 +10,14 @@ class BiodataApi {
   static Future<BiodataModel> getBiodata() async {
     SharedPreferences sPref = await SharedPreferences.getInstance();
     var nomorAnggota = sPref.getString('nomor_anggota');
-    final BIODATA_URL =
-        Config.API_URL + "get_biodata?nomor_anggota=${nomorAnggota}";
+    final biodataUrl =
+        "${Config.API_URL}get_biodata?nomor_anggota=$nomorAnggota";
 
-    var response = await http.get(Uri.parse(BIODATA_URL));
+    var response = await http.get(Uri.parse(biodataUrl));
 
     if (response.statusCode == 200) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      return BiodataModel.fromJson(data['data']);
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      return BiodataModel.fromJson(responseData['data']);
     } else {
       throw Exception('Gagal mendapatkan biodata');
     }
@@ -26,21 +26,13 @@ class BiodataApi {
   static Future<Map<String, dynamic>> updateBiodata(
     BiodataModel biodataModel,
   ) async {
-    final UPDATE_BIO = Config.API_URL + "update_biodata";
-    var data = biodataModel.toJson(biodataModel);
-    print(data);
+    final updateBio = "${Config.API_URL}update_biodata";
+    var requestData = biodataModel.toJson(biodataModel);
+    print(requestData);
 
-    var response = await http.post(Uri.parse(UPDATE_BIO), body: data);
-    // var response = await http.post(
-    //   Uri.parse(UPDATE_BIO),
-    //   body: data,
-    // );
+    var response = await http.post(Uri.parse(updateBio), body: requestData);
 
-    if (response.body != null) {
-      final Map<String, dynamic> data = json.decode(response.body);
-      return data;
-    } else {
-      throw Exception('Gagal mengupdate biodata');
-    }
+    final Map<String, dynamic> responseData = json.decode(response.body);
+    return responseData;
   }
 }

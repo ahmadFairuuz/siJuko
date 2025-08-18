@@ -8,7 +8,7 @@ import 'ConfigAPI.dart';
 
 class HasilSurveyApi {
   static Future<List<HasilSurveyModel>> getHasilSurvey() async {
-    final URL = Config.API_URL + 'hasil_survey';
+    final URL = '${Config.API_URL}hasil_survey';
 
     final response = await http.get(Uri.parse(URL));
 

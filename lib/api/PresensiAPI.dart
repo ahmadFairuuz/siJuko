@@ -6,14 +6,14 @@ import '../api/ConfigAPI.dart';
 
 class PresensiApi {
   static Future<Map<String, dynamic>> presensi(String id) async {
-    final URL = Config.API_URL + 'presensi';
+    final URL = '${Config.API_URL}presensi';
 
     SharedPreferences sPref = await SharedPreferences.getInstance();
-    var nomor_anggota = sPref.getString('nomor_anggota');
+    var nomorAnggota = sPref.getString('nomor_anggota');
 
     var body = {
       'id_kegiatan': id,
-      'nomor_anggota': nomor_anggota.toString(),
+      'nomor_anggota': nomorAnggota.toString(),
     };
 
     final response = await http.post(

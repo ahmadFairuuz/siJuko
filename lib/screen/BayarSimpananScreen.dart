@@ -24,7 +24,7 @@ class _BayarScreenState extends State<BayarScreen> {
     });
   }
 
-  TextEditingController _nominalController = TextEditingController();
+  final TextEditingController _nominalController = TextEditingController();
 
   Future<void> _pickImage() async {
     var image = await picker.pickImage(source: ImageSource.gallery);

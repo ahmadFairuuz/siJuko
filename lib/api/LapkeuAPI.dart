@@ -7,7 +7,7 @@ import '../data_model/LapkeuModel.dart';
 
 class LaporanKeuanganApi {
   static Future<List<LaporanKeuanganModel>> getLaporanKeuangan() async {
-    final String URL = Config.API_URL + 'laporan_keuangan';
+    final String URL = '${Config.API_URL}laporan_keuangan';
 
     final response = await http.get(Uri.parse(URL));
     print(response.body);

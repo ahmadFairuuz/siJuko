@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import '../component/BottomNavigation.dart';
 import '../component/PostItem.dart';
 import '../data_model/HomeData.dart';
-import '../screen/QrScreen.dart';
 import 'HomeScreen.dart';
 
 class AllPostScreen extends StatefulWidget {
   final Future<HomeData> homeData;
 
-  AllPostScreen({super.key, required this.homeData});
+  const AllPostScreen({super.key, required this.homeData});
 
   @override
   _AllPostScreenState createState() => _AllPostScreenState();

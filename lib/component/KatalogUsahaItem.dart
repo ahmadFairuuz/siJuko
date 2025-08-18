@@ -5,8 +5,7 @@ import '../data_model/KatalogModel.dart';
 
 class KatalogUsahaCardItem extends StatelessWidget {
   KatalogModel katalogModel;
-  KatalogUsahaCardItem({Key? key, required this.katalogModel})
-    : super(key: key);
+  KatalogUsahaCardItem({super.key, required this.katalogModel});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class KatalogUsahaCardItem extends StatelessWidget {
           ),
           Text(
             katalogModel.nama_produk.length > 20
-                ? katalogModel.nama_produk.substring(0, 20) + '...'
+                ? '${katalogModel.nama_produk.substring(0, 20)}...'
                 : katalogModel.nama_produk,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             textAlign: TextAlign.start,

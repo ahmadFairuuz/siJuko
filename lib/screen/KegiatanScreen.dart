@@ -6,7 +6,7 @@ import '../component/KegiatanListItem.dart';
 import '../data_model/KegiatanModel.dart';
 
 class KegiatanScreen extends StatefulWidget {
-  const KegiatanScreen({Key? key}) : super(key: key);
+  const KegiatanScreen({super.key});
 
   @override
   State<KegiatanScreen> createState() => _KegiatanScreenState();
@@ -14,7 +14,7 @@ class KegiatanScreen extends StatefulWidget {
 
 class _KegiatanScreenState extends State<KegiatanScreen> {
   Future<List<KegiatanModel>> dataKegiatan = Future.value([]);
-  RefreshController _refreshController = RefreshController(
+  final RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
 

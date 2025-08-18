@@ -1,4 +1,4 @@
-package com.example.jukover7
+package com.kopmaul.sijuko
 
 import io.flutter.embedding.android.FlutterActivity
 

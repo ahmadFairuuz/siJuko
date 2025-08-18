@@ -6,13 +6,15 @@ import '../component/LapkeuListItem.dart';
 import '../data_model/LapkeuModel.dart';
 
 class LaporanKeuanganScreen extends StatefulWidget {
+  const LaporanKeuanganScreen({super.key});
+
   @override
   _LaporanKeuanganScreenState createState() => _LaporanKeuanganScreenState();
 }
 
 class _LaporanKeuanganScreenState extends State<LaporanKeuanganScreen> {
   Future<List<LaporanKeuanganModel>> dataLaporan = Future.value([]);
-  RefreshController _refreshController = RefreshController(
+  final RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
 

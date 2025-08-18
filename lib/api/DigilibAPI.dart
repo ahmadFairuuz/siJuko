@@ -7,7 +7,7 @@ import '../data_model/DigilibModel.dart';
 
 class DigilibApi {
   static Future<List<DigilibModel>> getDigilib() async {
-    final URL = Config.API_URL + 'digilib';
+    final URL = '${Config.API_URL}digilib';
 
     final response = await http.get(Uri.parse(URL));
 

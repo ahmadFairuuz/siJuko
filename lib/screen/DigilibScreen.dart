@@ -6,7 +6,7 @@ import '../component/DigilibList.dart';
 import '../data_model/DigilibModel.dart';
 
 class DigilibScreen extends StatefulWidget {
-  const DigilibScreen({Key? key}) : super(key: key);
+  const DigilibScreen({super.key});
 
   @override
   _DigilibScreenState createState() => _DigilibScreenState();

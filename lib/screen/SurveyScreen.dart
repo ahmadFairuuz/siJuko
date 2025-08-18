@@ -6,7 +6,7 @@ import '../component/SurveyListItem.dart';
 import '../data_model/SurveyModel.dart';
 
 class SurveyScreen extends StatefulWidget {
-  const SurveyScreen({Key? key}) : super(key: key);
+  const SurveyScreen({super.key});
 
   @override
   _SurveyScreenState createState() => _SurveyScreenState();

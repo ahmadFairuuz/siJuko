@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 class KegiatanModel {
   String nama_kegiatan;

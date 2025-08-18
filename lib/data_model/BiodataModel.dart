@@ -32,7 +32,7 @@ class BiodataModel {
     );
   }
 
-  toJson(data) {
+  Map<String, String> toJson(data) {
     Map<String, String> map = {
       'nomor_anggota': data.nomorAnggota,
       'npm': data.npm,

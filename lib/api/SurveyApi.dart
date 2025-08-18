@@ -6,7 +6,7 @@ import '../data_model/SurveyModel.dart';
 
 class SurveyApi {
   static Future<List<SurveyModel>> getSurvey() async {
-    final URL = Config.API_URL + 'survey_berjalan';
+    final URL = '${Config.API_URL}survey_berjalan';
 
     final response = await http.get(Uri.parse(URL));
     if (response.body.isNotEmpty) {

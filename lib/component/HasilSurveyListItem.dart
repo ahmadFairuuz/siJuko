@@ -8,7 +8,7 @@ class HasilSurveyListItem extends StatelessWidget {
   final HasilSurveyModel dataLaporan;
   DateFormat dateFormat = DateFormat('dd MMMM yyyy'); // Format tanggal
 
-  HasilSurveyListItem({Key? key, required this.dataLaporan}) : super(key: key);
+  HasilSurveyListItem({super.key, required this.dataLaporan});
 
   Future<void> _launchUrl() async {
     if (!await launchUrl(Uri.parse(dataLaporan.file))) {
@@ -46,7 +46,7 @@ class HasilSurveyListItem extends StatelessWidget {
                   children: [
                     Text(
                       dataLaporan.nama_survey.length >= 30
-                          ? dataLaporan.nama_survey.substring(0, 30) + '...'
+                          ? '${dataLaporan.nama_survey.substring(0, 30)}...'
                           : dataLaporan.nama_survey,
                       maxLines: 2,
                       style: TextStyle(
@@ -59,11 +59,9 @@ class HasilSurveyListItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      dateFormat.format(DateTime.parse(dataLaporan.tgl_mulai)) +
-                          ' - ' +
-                          dateFormat.format(
+                      '${dateFormat.format(DateTime.parse(dataLaporan.tgl_mulai))} - ${dateFormat.format(
                             DateTime.parse(dataLaporan.tgl_selesai),
-                          ),
+                          )}',
                       style: TextStyle(
                         fontSize: 14,
                         fontFamily: 'Poppins',

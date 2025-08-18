@@ -6,7 +6,7 @@ import '../component/HasilSurveyListItem.dart';
 import '../data_model/HasilSurveyModel.dart';
 
 class HasilSurveyScreen extends StatefulWidget {
-  const HasilSurveyScreen({Key? key}) : super(key: key);
+  const HasilSurveyScreen({super.key});
 
   @override
   _HasilSurveyScreenState createState() => _HasilSurveyScreenState();

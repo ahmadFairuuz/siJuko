@@ -8,7 +8,7 @@ class LaporanKeuanganItem extends StatelessWidget {
   final LaporanKeuanganModel dataLaporan;
   DateFormat dateFormat = DateFormat('MMMM yyyy');
 
-  LaporanKeuanganItem({Key? key, required this.dataLaporan}) : super(key: key);
+  LaporanKeuanganItem({super.key, required this.dataLaporan});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class LaporanKeuanganItem extends StatelessWidget {
                   children: [
                     Text(
                       dataLaporan.judul.length >= 30
-                          ? dataLaporan.judul.substring(0, 30) + '...'
+                          ? '${dataLaporan.judul.substring(0, 30)}...'
                           : dataLaporan.judul,
                       style: TextStyle(
                         fontSize: 16,
@@ -73,7 +73,7 @@ class LaporanKeuanganItem extends StatelessWidget {
                             2,
                             '0',
                           ); // Menambahkan nol di depan jika bulan satu digit
-                          String tanggalString = '${tahun}-${bulan}-01';
+                          String tanggalString = '$tahun-$bulan-01';
                           DateTime tanggal = DateTime.parse(tanggalString);
                           return dateFormat.format(tanggal);
                         } catch (e) {

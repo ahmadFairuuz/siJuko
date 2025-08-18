@@ -15,7 +15,7 @@ import 'QrScreen.dart';
 class ProfileTab extends StatefulWidget {
   final Future<HomeData> homeData;
 
-  const ProfileTab({Key? key, required this.homeData}) : super(key: key);
+  const ProfileTab({super.key, required this.homeData});
 
   @override
   State<ProfileTab> createState() => _ProfileTabState();
@@ -32,7 +32,7 @@ class _ProfileTabState extends State<ProfileTab> {
     getName();
   }
 
-  getName() async {
+  Future<void> getName() async {
     SharedPreferences sPref = await SharedPreferences.getInstance();
     var nama = sPref.getString("nama");
     var nomorAnggota = sPref.getString("nomor_anggota");

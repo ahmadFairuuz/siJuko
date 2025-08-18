@@ -7,8 +7,8 @@ import '../data_model/KegiatanModel.dart';
 
 class KegiatanApi {
   static Future<List<KegiatanModel>> getKegiatan() async {
-    final KEGIATAN_URL = Config.API_URL + "get_kegiatan";
-    var response = await http.get(Uri.parse(KEGIATAN_URL));
+    final kegiatanUrl = "${Config.API_URL}get_kegiatan";
+    var response = await http.get(Uri.parse(kegiatanUrl));
     if (response.body.isNotEmpty) {
       print(response.body);
       final Map<String, dynamic> data = json.decode(response.body);

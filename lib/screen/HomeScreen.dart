@@ -11,6 +11,8 @@ import '../screen/AllPostScreen.dart';
 import '../screen/BayarSimpananScreen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }

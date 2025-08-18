@@ -13,11 +13,11 @@ class BottomNavigation extends StatelessWidget {
   final Future<HomeData> homeData;
 
   const BottomNavigation({
-    Key? key,
+    super.key,
     required this.selectedIndex,
     required this.onItemTapped,
     required this.homeData,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -6,14 +6,14 @@ import '../component/KatalogUsahaItem.dart';
 import '../data_model/KatalogModel.dart';
 
 class KatalogScreen extends StatefulWidget {
-  const KatalogScreen({Key? key}) : super(key: key);
+  const KatalogScreen({super.key});
 
   @override
   _KatalogScreenState createState() => _KatalogScreenState();
 }
 
 class _KatalogScreenState extends State<KatalogScreen> {
-  RefreshController _controller = RefreshController();
+  final RefreshController _controller = RefreshController();
   Future<List<KatalogModel>> katalog = Future.value([]);
   var _waiting = true;
 

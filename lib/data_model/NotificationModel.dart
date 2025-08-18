@@ -1,24 +1,21 @@
-class NotificationModel {
-  final String title;
-  final String body;
-  final DateTime timestamp;
+import 'package:hive/hive.dart';
+
+part 'NotificationModel.g.dart';
+
+@HiveType(typeId: 0) // wajib, setiap model harus punya typeId unik
+class NotificationModel extends HiveObject {
+  @HiveField(0)
+  String title;
+
+  @HiveField(1)
+  String body;
+
+  @HiveField(2)
+  DateTime timestamp;
 
   NotificationModel({
     required this.title,
     required this.body,
     required this.timestamp,
   });
-
-  Map<String, dynamic> toJson() => {
-    'title': title,
-    'body': body,
-    'timestamp': timestamp.toIso8601String(),
-  };
-
-  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
-      NotificationModel(
-        title: json['title'],
-        body: json['body'],
-        timestamp: DateTime.parse(json['timestamp']),
-      );
 }

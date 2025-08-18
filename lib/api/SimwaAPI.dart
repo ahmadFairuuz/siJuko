@@ -8,15 +8,15 @@ class SimwaApi {
     String nominal,
     String bukti,
   ) async {
-    final URL = Config.API_URL + 'bayar_simwa';
+    final URL = '${Config.API_URL}bayar_simwa';
 
     var url = Uri.parse(URL);
     var request = http.MultipartRequest('POST', url);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String nomor_anggota = prefs.getString('nomor_anggota')!;
+    String nomorAnggota = prefs.getString('nomor_anggota')!;
 
-    request.fields['nomor_anggota'] = nomor_anggota;
+    request.fields['nomor_anggota'] = nomorAnggota;
     request.fields['nominal'] = nominal;
     request.files.add(
       await http.MultipartFile.fromPath('bukti_pembayaran', bukti),

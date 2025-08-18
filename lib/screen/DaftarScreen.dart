@@ -5,6 +5,8 @@ import '../api/authApi.dart'; // Pastikan path ini benar
 import '../screen/LoginScreen.dart'; // Ganti dengan path yang sesuai
 
 class DaftarScreen extends StatefulWidget {
+  const DaftarScreen({super.key});
+
   @override
   _DaftarScreenState createState() => _DaftarScreenState();
 }
@@ -170,6 +172,10 @@ class _DaftarScreenState extends State<DaftarScreen> {
                     SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: _daftar,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[900],
+                        minimumSize: Size(200, 40),
+                      ),
                       child: Text(
                         'Daftar',
                         style: TextStyle(
@@ -177,10 +183,6 @@ class _DaftarScreenState extends State<DaftarScreen> {
                           fontSize: 16,
                           color: Colors.white,
                         ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[900],
-                        minimumSize: Size(200, 40),
                       ),
                     ),
                   ],

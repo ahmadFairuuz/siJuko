@@ -8,6 +8,8 @@ import '../screen/LapkeuScreen.dart'; // Pastikan mengimpor LapkeuScreen
 import '../screen/SurveyScreen.dart'; // Impor SurveyScreen
 
 class HomeListButton extends StatelessWidget {
+  const HomeListButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

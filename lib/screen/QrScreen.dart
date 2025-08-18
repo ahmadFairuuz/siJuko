@@ -6,7 +6,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../api/PresensiAPI.dart';
 
 class QrScreen extends StatefulWidget {
-  const QrScreen({Key? key}) : super(key: key);
+  const QrScreen({super.key});
 
   @override
   _QrScreenState createState() => _QrScreenState();

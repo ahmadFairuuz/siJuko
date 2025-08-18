@@ -1,8 +1,8 @@
-import 'dart:convert';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
+
+import '../data_model/NotificationModel.dart';
 
 class FirebaseApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
@@ -18,7 +18,7 @@ class FirebaseApi {
     FirebaseMessaging.onMessage.listen((message) async {
       final notification = message.notification;
       if (notification != null) {
-        await _saveNotification(notification); // simpan di foreground
+        await saveNotification(notification); // simpan di foreground
         showFlutterNotification(notification);
       }
     });
@@ -26,7 +26,7 @@ class FirebaseApi {
 
   Future<void> initLocalNotification() async {
     const androidSettings = AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
+      '@mipmap/launcher_icon',
     );
     const settings = InitializationSettings(android: androidSettings);
     await _localNotifications.initialize(settings);
@@ -34,8 +34,8 @@ class FirebaseApi {
 
   void showFlutterNotification(RemoteNotification notification) {
     const androidDetails = AndroidNotificationDetails(
-      'channel_id',
-      'channel_name',
+      'high_importance_channel', // harus sama dengan di Manifest
+      'High Importance Notifications',
       importance: Importance.max,
       priority: Priority.high,
     );
@@ -50,40 +50,30 @@ class FirebaseApi {
     );
   }
 
-  Future<void> _saveNotification(RemoteNotification notification) async {
+  static Future<void> saveNotification(RemoteNotification notification) async {
     print("📩 Menyimpan notifikasi: ${notification.title}");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? stored = prefs.getString('notifications');
-    List<Map<String, dynamic>> notifList = [];
 
-    if (stored != null) {
-      notifList = List<Map<String, dynamic>>.from(json.decode(stored));
-    }
+    final box = await Hive.openBox<NotificationModel>('notifications');
 
-    notifList.insert(0, {
-      'title': notification.title ?? 'Tanpa Judul',
-      'body': notification.body ?? '',
-      'time': DateTime.now().toString(),
-    });
-
-    // Batasi max 50 notifikasi
-    if (notifList.length > 50) notifList = notifList.sublist(0, 50);
-
-    prefs.setString('notifications', json.encode(notifList));
+    box.add(
+      NotificationModel(
+        title: notification.title ?? 'Tanpa Judul',
+        body: notification.body ?? '',
+        timestamp: DateTime.now(),
+      ),
+    );
   }
 
-  static Future<List<Map<String, dynamic>>> getStoredNotifications() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? stored = prefs.getString('notifications');
-    if (stored != null) {
-      return List<Map<String, dynamic>>.from(json.decode(stored));
-    }
-    return [];
+  // ✅ Ambil notifikasi dari Hive
+  static Future<List<NotificationModel>> getStoredNotifications() async {
+    final box = await Hive.openBox<NotificationModel>('notifications');
+    return box.values.toList().reversed.toList();
   }
 
+  // ✅ Simpan dari background juga ke Hive
   Future<void> saveNotificationFromBackground(
     RemoteNotification notification,
   ) async {
-    await _saveNotification(notification);
+    await saveNotification(notification);
   }
 }

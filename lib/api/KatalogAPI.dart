@@ -7,7 +7,7 @@ import 'ConfigAPI.dart';
 
 class KatalogApi {
   static Future<List<KatalogModel>> getKatalog() async {
-    final URL = Config.API_URL + 'produk_usaha';
+    final URL = '${Config.API_URL}produk_usaha';
 
     final response = await http.get(Uri.parse(URL));
 

@@ -8,7 +8,7 @@ class SurveyListItem extends StatelessWidget {
   final SurveyModel dataSurvey;
   DateFormat dateFormat = DateFormat('dd MMMM yyyy');
 
-  SurveyListItem({Key? key, required this.dataSurvey}) : super(key: key);
+  SurveyListItem({super.key, required this.dataSurvey});
 
   Future<void> _launchUrl() async {
     if (!await launchUrl(Uri.parse(dataSurvey.link))) {
@@ -47,7 +47,7 @@ class SurveyListItem extends StatelessWidget {
                   children: [
                     Text(
                       dataSurvey.nama_survey.length >= 30
-                          ? dataSurvey.nama_survey.substring(0, 30) + '...'
+                          ? '${dataSurvey.nama_survey.substring(0, 30)}...'
                           : dataSurvey.nama_survey,
                       style: TextStyle(
                         fontSize: 16,
@@ -59,11 +59,9 @@ class SurveyListItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      dateFormat.format(DateTime.parse(dataSurvey.tgl_mulai)) +
-                          ' - ' +
-                          dateFormat.format(
+                      '${dateFormat.format(DateTime.parse(dataSurvey.tgl_mulai))} - ${dateFormat.format(
                             DateTime.parse(dataSurvey.tgl_selesai),
-                          ),
+                          )}',
                       style: const TextStyle(
                         color: Colors
                             .white70, // Mengubah warna tanggal menjadi lebih terang

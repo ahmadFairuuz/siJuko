@@ -4,6 +4,8 @@ import '../api/BiodatAPI.dart';
 import '../data_model/BiodataModel.dart';
 
 class EditBiodataScreen extends StatefulWidget {
+  const EditBiodataScreen({super.key});
+
   @override
   _EditBiodataScreenState createState() => _EditBiodataScreenState();
 }
@@ -25,7 +27,7 @@ class _EditBiodataScreenState extends State<EditBiodataScreen> {
     getData();
   }
 
-  getData() async {
+  Future<void> getData() async {
     setState(() => _waiting = true);
     BiodataModel biodata = await BiodataApi.getBiodata();
     setState(() {
@@ -92,18 +94,18 @@ class _EditBiodataScreenState extends State<EditBiodataScreen> {
                       value: _jenisKelaminController.text,
                       items: const [
                         DropdownMenuItem(
+                          value: 'L',
                           child: Text(
                             'Laki-laki',
                             style: TextStyle(color: Colors.black),
                           ),
-                          value: 'L',
                         ),
                         DropdownMenuItem(
+                          value: 'P',
                           child: Text(
                             'Perempuan',
                             style: TextStyle(color: Colors.black),
                           ),
-                          value: 'P',
                         ),
                       ],
                       onChanged: (v) {
@@ -131,16 +133,16 @@ class _EditBiodataScreenState extends State<EditBiodataScreen> {
                     Center(
                       child: TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
+                          backgroundColor: WidgetStateProperty.all(
                             Colors.green[900],
                           ),
-                          padding: MaterialStateProperty.all(
+                          padding: WidgetStateProperty.all(
                             const EdgeInsets.symmetric(
                               vertical: 12,
                               horizontal: 24,
                             ),
                           ),
-                          shape: MaterialStateProperty.all(
+                          shape: WidgetStateProperty.all(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

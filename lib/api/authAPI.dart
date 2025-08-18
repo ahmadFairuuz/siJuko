@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api/ConfigAPI.dart';
 
 class AuthApi {
-  static final String REGIST_URL = Config.AUTH_URL + "register";
-  static final String LOGIN_URL = Config.AUTH_URL + "login";
+  static final String REGIST_URL = "${Config.AUTH_URL}register";
+  static final String LOGIN_URL = "${Config.AUTH_URL}login";
 
   static Future<Map<String, dynamic>> register(
     String nomorAnggota,
@@ -72,15 +72,15 @@ class AuthApi {
   }
 
   static Future<Map<String, dynamic>> reset_password(String password) async {
-    final URL = Config.API_URL + "reset_password";
+    final URL = "${Config.API_URL}reset_password";
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String username = sharedPreferences.getString('username')!;
-    String nomor_anggota = sharedPreferences.getString('nomor_anggota')!;
+    String nomorAnggota = sharedPreferences.getString('nomor_anggota')!;
 
     var data = {
       'username': username,
-      'nomor_anggota': nomor_anggota,
+      'nomor_anggota': nomorAnggota,
       'password': password,
     };
     final response = await http.post(Uri.parse(URL), body: data);

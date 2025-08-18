@@ -4,6 +4,8 @@ import '../screen/DaftarScreen.dart';
 import '../screen/LoginScreen.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class WelcomeScreen extends StatelessWidget {
               top:
                   MediaQuery.of(context).size.height *
                   0.3, // Menyesuaikan posisi vertikal teks
-              child: Container(
+              child: SizedBox(
                 width:
                     MediaQuery.of(context).size.width *
                     0.5, // Lebar maksimum teks
@@ -97,6 +99,13 @@ class WelcomeScreen extends StatelessWidget {
                         ), // Pindah ke halaman Daftar tanpa animasi
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[900],
+                      minimumSize: Size(
+                        200,
+                        40,
+                      ), // Mengurangi panjang shape tombol
+                    ),
                     child: Text(
                       "Daftar",
                       style: TextStyle(
@@ -104,13 +113,6 @@ class WelcomeScreen extends StatelessWidget {
                         fontSize: 16,
                         color: Colors.white, // Warna teks tombol
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[900],
-                      minimumSize: Size(
-                        200,
-                        40,
-                      ), // Mengurangi panjang shape tombol
                     ),
                   ),
                   SizedBox(height: 10),
@@ -123,14 +125,6 @@ class WelcomeScreen extends StatelessWidget {
                         ), // Pindah ke halaman Login tanpa animasi
                       );
                     },
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontFamily: 'Poppins', // Menggunakan font Poppins
-                        fontSize: 16,
-                        color: Colors.white, // Warna teks tombol
-                      ),
-                    ),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.green[900],
                       backgroundColor: Colors.green[900],
@@ -139,6 +133,14 @@ class WelcomeScreen extends StatelessWidget {
                         200,
                         40,
                       ), // Mengurangi panjang shape tombol
+                    ),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        fontFamily: 'Poppins', // Menggunakan font Poppins
+                        fontSize: 16,
+                        color: Colors.white, // Warna teks tombol
+                      ),
                     ),
                   ),
                 ],

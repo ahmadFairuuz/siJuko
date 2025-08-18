@@ -7,7 +7,7 @@ class KegiatanItem extends StatelessWidget {
   final KegiatanModel dataKegiatan;
   DateFormat dateFormat = DateFormat('dd MMMM yyyy');
 
-  KegiatanItem({Key? key, required this.dataKegiatan}) : super(key: key);
+  KegiatanItem({super.key, required this.dataKegiatan});
 
   @override
   Widget build(BuildContext context) {
