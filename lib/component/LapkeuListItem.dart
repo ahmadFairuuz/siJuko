@@ -53,15 +53,21 @@ class LaporanKeuanganItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      dataLaporan.judul.length >= 30
-                          ? '${dataLaporan.judul.substring(0, 30)}...'
-                          : dataLaporan.judul,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    Tooltip(
+                      message: dataLaporan
+                          .judul, // teks asli akan muncul saat hover/long press
+                      child: Text(
+                        dataLaporan.judul,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        overflow:
+                            TextOverflow.ellipsis, // otomatis potong jadi "..."
+                        maxLines: 1, // biar hanya 1 baris
+                        softWrap: false, // jangan turun ke baris berikutnya
                       ),
                     ),
                     const SizedBox(height: 8), // Jarak antar judul dan tanggal

@@ -49,28 +49,34 @@ class DigilibListItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      dataDigilib.judul.length >= 30
-                          ? '${dataDigilib.judul.substring(0, 30)}...'
-                          : dataDigilib.judul,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    Tooltip(
+                      message: dataDigilib.judul,
+                      child: Text(
+                        dataDigilib.judul,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 8,
                     ), // Jarak antar judul dan deskripsi
-                    Text(
-                      dataDigilib.deskripsi.length >= 40
-                          ? '${dataDigilib.deskripsi.substring(0, 40)}...'
-                          : dataDigilib.deskripsi,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'Poppins',
-                        color: Colors.white70,
+                    Tooltip(
+                      message: dataDigilib.deskripsi,
+                      child: Text(
+                        dataDigilib.deskripsi,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Poppins',
+                          color: Colors.white70,
+                        ),
+                        overflow:
+                            TextOverflow.ellipsis, // otomatis potong jadi "..."
+                        maxLines: 2, // biar hanya 1 baris
+                        softWrap: false, // jangan turun ke baris berikutnya
                       ),
                     ),
                   ],

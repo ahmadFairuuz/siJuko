@@ -6,8 +6,11 @@ import '../api/ConfigAPI.dart';
 import '../data_model/DigilibModel.dart';
 
 class DigilibApi {
-  static Future<List<DigilibModel>> getDigilib() async {
-    final URL = '${Config.API_URL}digilib';
+  static Future<List<DigilibModel>> getDigilib({
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final URL = '${Config.API_URL}digilib?page=$page&limit=$limit';
 
     final response = await http.get(Uri.parse(URL));
 

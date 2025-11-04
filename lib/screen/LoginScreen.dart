@@ -117,8 +117,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       decoration: InputDecoration(labelText: 'Username'),
                       validator: (value) {
-                        if (value!.isEmpty) {
+                        if (value == null || value.isEmpty) {
                           return 'Username tidak boleh kosong';
+                        }
+                        if (value.length != 6) {
+                          return 'Masukkan username dengan tepat 6 karakter';
                         }
                         return null;
                       },

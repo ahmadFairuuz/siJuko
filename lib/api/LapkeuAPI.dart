@@ -6,8 +6,12 @@ import '../api/ConfigAPI.dart';
 import '../data_model/LapkeuModel.dart';
 
 class LaporanKeuanganApi {
-  static Future<List<LaporanKeuanganModel>> getLaporanKeuangan() async {
-    final String URL = '${Config.API_URL}laporan_keuangan';
+  static Future<List<LaporanKeuanganModel>> getLaporanKeuangan({
+    int page = 1,
+    int limit = 10,
+  }) async {
+    final String URL =
+        '${Config.API_URL}laporan_keuangan?page=$page&limit=$limit';
 
     final response = await http.get(Uri.parse(URL));
     print(response.body);

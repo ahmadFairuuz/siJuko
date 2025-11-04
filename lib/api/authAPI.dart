@@ -35,6 +35,13 @@ class AuthApi {
     String username,
     String password,
   ) async {
+    if (username.length != 6) {
+      return {
+        "status": 400,
+        "message": "Username harus 6 digit sesuai data anggota",
+      };
+    }
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var data = {'username': username, 'password': password};
 
@@ -78,6 +85,18 @@ class AuthApi {
     String username = sharedPreferences.getString('username')!;
     String nomorAnggota = sharedPreferences.getString('nomor_anggota')!;
 
+    print("📌 ResetPassword -> username: $username");
+    print("📌 ResetPassword -> nomorAnggota: $nomorAnggota");
+    print("📌 ResetPassword -> password: $password");
+
+    if (username == null || nomorAnggota == null) {
+      return {
+        "status": "error",
+        "message":
+            "Data user tidak ditemukan di SharedPreferences. Silakan login ulang.",
+      };
+    }
+
     var data = {
       'username': username,
       'nomor_anggota': nomorAnggota,
@@ -85,8 +104,30 @@ class AuthApi {
     };
     final response = await http.post(Uri.parse(URL), body: data);
 
-    final Map<String, dynamic> responseData = json.decode(response.body);
+    print("Reset Password Status: ${response.statusCode}");
+    print("Reset Password Body: ${response.body}");
 
-    return responseData;
+    try {
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      // Normalisasi biar UI gampang
+      if (responseData.containsKey('messages')) {
+        final messages = responseData['messages'];
+        return {
+          "status": responseData['status'] ?? response.statusCode,
+          "message": messages is Map
+              ? messages['error'] ?? messages.toString()
+              : messages.toString(),
+        };
+      }
+
+      return responseData;
+    } catch (e) {
+      print("❌ JSON Decode Error: $e");
+      return {
+        "status": "error",
+        "message": "Server mengembalikan response tidak valid",
+      };
+    }
   }
 }

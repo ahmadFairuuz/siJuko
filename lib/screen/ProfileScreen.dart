@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../component/BottomNavigation.dart';
 import '../component/ProfileMenuListItem.dart';
@@ -63,6 +64,18 @@ class _ProfileTabState extends State<ProfileTab> {
         context,
         MaterialPageRoute(builder: (context) => QrScreen()),
       );
+    }
+  }
+
+  /// fungsi untuk buka Play Store
+  Future<void> _launchPlayStore() async {
+    const packageName = "com.kopmaul.sijuko"; // ganti dengan applicationId kamu
+    final url = Uri.parse(
+      "https://play.google.com/store/apps/details?id=$packageName",
+    );
+
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw "Tidak bisa membuka Play Store";
     }
   }
 
@@ -184,9 +197,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   ProfileMenuListItem(
                     label: "Beri Rating",
                     icon: Icons.star,
-                    onTap: () {
-                      // Aksi beri rating
-                    },
+                    onTap: _launchPlayStore,
                   ),
                 ],
               ),

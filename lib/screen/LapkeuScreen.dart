@@ -13,28 +13,58 @@ class LaporanKeuanganScreen extends StatefulWidget {
 }
 
 class _LaporanKeuanganScreenState extends State<LaporanKeuanganScreen> {
-  Future<List<LaporanKeuanganModel>> dataLaporan = Future.value([]);
   final RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
 
+  List<LaporanKeuanganModel> _laporanList = [];
+  int _currentPage = 1;
+  final int _limit = 10; // jumlah data per page
+  bool _hasMore = true;
+
   @override
   void initState() {
     super.initState();
-    getData();
+    _fetchData(reset: true);
   }
 
-  void getData() async {
-    var data = await LaporanKeuanganApi.getLaporanKeuangan();
-    setState(() {
-      dataLaporan = Future.value(data);
-    });
+  Future<void> _fetchData({bool reset = false}) async {
+    if (reset) {
+      _currentPage = 1;
+      _laporanList.clear();
+      _hasMore = true;
+    }
+
+    try {
+      final newData = await LaporanKeuanganApi.getLaporanKeuangan(
+        page: _currentPage,
+        limit: _limit,
+      );
+
+      setState(() {
+        _laporanList.addAll(newData);
+        if (newData.length < _limit) {
+          _hasMore = false; // sudah habis
+        }
+      });
+    } catch (e) {
+      print("Error: $e");
+    }
   }
 
-  void _refreshData() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    getData();
+  void _onRefresh() async {
+    await _fetchData(reset: true);
     _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    if (_hasMore) {
+      _currentPage++;
+      await _fetchData();
+      _refreshController.loadComplete();
+    } else {
+      _refreshController.loadNoData();
+    }
   }
 
   @override
@@ -49,34 +79,23 @@ class _LaporanKeuanganScreenState extends State<LaporanKeuanganScreen> {
           ), // Menggunakan font Poppins dengan warna hitam
         ),
       ),
-      body: FutureBuilder(
-        future: dataLaporan,
-        builder: (context, AsyncSnapshot<List<LaporanKeuanganModel>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data!.isNotEmpty) {
-              return Container(
+      body: SmartRefresher(
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        enablePullDown: true,
+        enablePullUp: true,
+        child: _laporanList.isEmpty
+            ? const Center(child: Text("Tidak ada data laporan"))
+            : ListView.separated(
                 padding: const EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width,
-                child: SmartRefresher(
-                  controller: _refreshController,
-                  onRefresh: _refreshData,
-                  enablePullUp: true,
-                  child: ListView.separated(
-                    itemBuilder: (context, index) =>
-                        LaporanKeuanganItem(dataLaporan: snapshot.data![index]),
-                    separatorBuilder: (context, index) =>
-                        Container(height: 1, color: Colors.black26),
-                    itemCount: snapshot.data!.length,
-                  ),
-                ),
-              );
-            } else {
-              return const Center(child: Text('Tidak ada data laporan'));
-            }
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
+                itemBuilder: (context, index) {
+                  return LaporanKeuanganItem(dataLaporan: _laporanList[index]);
+                },
+                separatorBuilder: (context, index) =>
+                    Container(height: 1, color: Colors.black26),
+                itemCount: _laporanList.length,
+              ),
       ),
     );
   }

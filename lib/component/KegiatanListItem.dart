@@ -49,8 +49,6 @@ class KegiatanItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
-                    overflow:
-                        TextOverflow.ellipsis, // Teks terpotong dengan "..."
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -83,17 +81,24 @@ class KegiatanItem extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  dataKegiatan.tempat_kegiatan,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.black, // Warna teks hijau tua
-                    fontSize: 14, // Ukuran teks lebih kecil
-                    fontWeight: FontWeight.w500,
+                Expanded(
+                  child: Text(
+                    dataKegiatan.tempat_kegiatan,
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      color: Colors.black, // Warna teks hijau tua
+                      fontSize: 14, // Ukuran teks lebih kecil
+                      fontWeight: FontWeight.w500,
+                    ),
+                    maxLines: 2, // maksimal 2 baris
+                    overflow: TextOverflow
+                        .ellipsis, // kalau lebih dari 2 baris tetap pakai "..."
+                    softWrap: true, // biar bisa pindah baris
                   ),
                 ),
+
                 Text(
                   dateFormat.format(
                     DateTime.parse(dataKegiatan.tanggal_kegiatan),

@@ -47,8 +47,8 @@ android {
         //minSdk = flutter.minSdkVersion
         minSdk = 29
         targetSdk = flutter.targetSdkVersion
-        versionCode = 13
-        versionName = "7.0.1"
+        versionCode = 14
+        versionName = "7.1.0"
     }
 
     buildTypes {

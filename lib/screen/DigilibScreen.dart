@@ -15,29 +15,63 @@ class DigilibScreen extends StatefulWidget {
 class _DigilibScreenState extends State<DigilibScreen> {
   List<DigilibModel> digitalLibrary = [];
   RefreshController refreshController = RefreshController();
-  var _waiting = true;
 
-  void getData() async {
-    setState(() {
-      _waiting = true;
-    });
-    var data = await DigilibApi.getDigilib();
-    setState(() {
-      digitalLibrary = data;
-      _waiting = false;
-    });
-  }
+  bool _waiting = true;
+  int _page = 1;
+  final int _limit = 10;
+  bool _hasMore = true;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    _getData(reset: true);
   }
 
-  void _refreshData() async {
-    await Future.delayed(const Duration(milliseconds: 1000));
-    getData();
+  Future<void> _getData({bool reset = false}) async {
+    if (reset) {
+      _page = 1;
+      _hasMore = true;
+      digitalLibrary.clear();
+    }
+
+    setState(() => _waiting = true);
+
+    try {
+      var data = await DigilibApi.getDigilib(page: _page, limit: _limit);
+
+      setState(() {
+        if (reset) {
+          digitalLibrary = data;
+        } else {
+          digitalLibrary.addAll(data);
+        }
+
+        // Jika jumlah data < limit berarti sudah habis
+        if (data.length < _limit) {
+          _hasMore = false;
+        } else {
+          _page++;
+        }
+      });
+    } catch (e) {
+      debugPrint("❌ Error fetch data: $e");
+    }
+
+    setState(() => _waiting = false);
+  }
+
+  void _onRefresh() async {
+    await _getData(reset: true);
     refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    if (_hasMore) {
+      await _getData();
+      refreshController.loadComplete();
+    } else {
+      refreshController.loadNoData();
+    }
   }
 
   @override
@@ -49,37 +83,28 @@ class _DigilibScreenState extends State<DigilibScreen> {
           style: TextStyle(fontFamily: 'Poppins'), // Menggunakan font Poppins
         ),
       ),
-      body: FutureBuilder(
-        future: Future.value(digitalLibrary),
-        builder: (context, AsyncSnapshot<List<DigilibModel>> snapshot) {
-          if (!_waiting) {
-            if (snapshot.data!.isNotEmpty) {
-              return Container(
-                padding: const EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width,
-                child: SmartRefresher(
-                  onRefresh: _refreshData,
-                  controller: refreshController,
-                  child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return DigilibListItem(
-                        dataDigilib: snapshot.data![index],
-                      );
-                    },
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(height: 10),
-                    itemCount: digitalLibrary.length,
-                  ),
+      body: _waiting && digitalLibrary.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : digitalLibrary.isEmpty
+          ? const Center(child: Text('Tidak ada data'))
+          : Container(
+              padding: const EdgeInsets.all(10),
+              width: MediaQuery.of(context).size.width,
+              child: SmartRefresher(
+                controller: refreshController,
+                onRefresh: _onRefresh,
+                onLoading: _onLoading,
+                enablePullUp: true, // ⬅️ penting untuk infinite scroll
+                child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return DigilibListItem(dataDigilib: digitalLibrary[index]);
+                  },
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
+                  itemCount: digitalLibrary.length,
                 ),
-              );
-            } else {
-              return const Center(child: Text('Tidak ada data'));
-            }
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+              ),
+            ),
     );
   }
 }
