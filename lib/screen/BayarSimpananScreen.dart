@@ -25,6 +25,7 @@ class _BayarScreenState extends State<BayarScreen> {
   }
 
   final TextEditingController _nominalController = TextEditingController();
+  final TextEditingController _dendaController = TextEditingController();
 
   Future<void> _pickImage() async {
     var image = await picker.pickImage(source: ImageSource.gallery);
@@ -91,6 +92,46 @@ class _BayarScreenState extends State<BayarScreen> {
                             Expanded(
                               child: TextFormField(
                                 controller: _nominalController,
+                                keyboardType: TextInputType.number,
+                                style: TextStyle(fontSize: 22),
+                                decoration: InputDecoration(
+                                  hintText: "0",
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Isikan Denda Tagihan',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Poppins',
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey.shade300),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          children: [
+                            Text("Rp", style: TextStyle(fontSize: 18)),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: TextFormField(
+                                controller: _dendaController,
                                 keyboardType: TextInputType.number,
                                 style: TextStyle(fontSize: 22),
                                 decoration: InputDecoration(
@@ -178,11 +219,14 @@ class _BayarScreenState extends State<BayarScreen> {
                             }
 
                             var angka = num.tryParse(_nominalController.text);
+                            var denda = num.tryParse(_dendaController.text);
 
-                            if (angka == null) {
+                            if (angka == null || denda == null) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text("Nominal harus berupa angka"),
+                                  content: Text(
+                                    "Nominal / denda harus berupa angka",
+                                  ),
                                 ),
                               );
                               return;
@@ -201,6 +245,7 @@ class _BayarScreenState extends State<BayarScreen> {
                             Map<String, dynamic> response =
                                 await SimwaApi.bayarSimwa(
                                   _nominalController.text,
+                                  _dendaController.text,
                                   _image!.path,
                                 );
                             _setWait();

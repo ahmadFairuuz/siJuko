@@ -6,6 +6,7 @@ import 'configAPI.dart';
 class SimwaApi {
   static Future<Map<String, dynamic>> bayarSimwa(
     String nominal,
+    String denda,
     String bukti,
   ) async {
     final URL = '${Config.API_URL}bayar_simwa';
@@ -18,6 +19,8 @@ class SimwaApi {
 
     request.fields['nomor_anggota'] = nomorAnggota;
     request.fields['nominal'] = nominal;
+    request.fields['denda'] = denda;
+
     request.files.add(
       await http.MultipartFile.fromPath('bukti_pembayaran', bukti),
     );
