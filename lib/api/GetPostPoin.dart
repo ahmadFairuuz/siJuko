@@ -1,6 +1,7 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 import '../data_model/HomeData.dart';
 import '../data_model/PostModel.dart';
@@ -17,7 +18,9 @@ class GetPostPoin {
 
     return HomeData(
       posts: posts,
-      simpananPoin: SimpananPoin.fromJson(simpananPoin), // Memastikan simpananPoin adalah objek SimpananPoin
+      simpananPoin: SimpananPoin.fromJson(
+        simpananPoin,
+      ), // Memastikan simpananPoin adalah objek SimpananPoin
     );
   }
 
@@ -35,6 +38,7 @@ class GetPostPoin {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
+      print("🔥 DEBUG API SIMPANAN POIN:");
       print(data);
       return data['data']; // Mengembalikan data dari respons API
     }
@@ -45,8 +49,11 @@ class GetPostPoin {
   static Future<List<PostModel>> getPost({num page = 1}) async {
     print('Masuk getPost');
 
-    final response = await http.get(Uri.parse(
-        'https://kopmaunila.com/wp-json/wp/v2/posts?_embed&per_page=10&page=$page'));
+    final response = await http.get(
+      Uri.parse(
+        'https://kopmaunila.com/wp-json/wp/v2/posts?_embed&per_page=10&page=$page',
+      ),
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);

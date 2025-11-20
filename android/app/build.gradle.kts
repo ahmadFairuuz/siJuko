@@ -45,7 +45,8 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId = "com.kopmaul.sijuko"
         //minSdk = flutter.minSdkVersion
-        minSdk = 29
+        //minSdk = 29 //android version 10
+        minSdk = 26 //android version 8.0
         targetSdk = flutter.targetSdkVersion
         versionCode = 14
         versionName = "7.1.0"

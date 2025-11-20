@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jukover7/screen/RiwayatPembayaranScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/GetPostPoin.dart';
@@ -245,9 +246,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .simpananPoin
                                       .tagihan
                                       .toString();
+                                  String denda = snapshot
+                                      .data!
+                                      .simpananPoin
+                                      .denda
+                                      .toString();
                                   return Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceAround,
                                     children: [
                                       buildBalanceInfo(
                                         'Simpanan',
@@ -256,6 +262,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       buildBalanceInfo(
                                         'Tagihan',
                                         'Rp.$tagihan',
+                                      ),
+                                      buildBalanceInfo(
+                                        'Denda',
+                                        'Rp.$denda',
+                                        valueColor: Colors.red,
                                       ),
                                     ],
                                   );
@@ -269,8 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 vertical: 16.0,
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   // Tombol Bayar Tagihan
                                   ElevatedButton(
@@ -301,36 +311,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                   ),
-
-                                  // Tombol Riwayat Tagihan
-                                  // ElevatedButton(
-                                  //   onPressed: () {
-                                  //     Navigator.push(
-                                  //       context,
-                                  //       MaterialPageRoute(
-                                  //         builder: (context) => HomeScreen(),
-                                  //       ),
-                                  //     );
-                                  //   },
-                                  //   style: ElevatedButton.styleFrom(
-                                  //     backgroundColor: Colors.grey[800],
-                                  //     padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 20,
-                                  //       vertical: 12,
-                                  //     ),
-                                  //     shape: RoundedRectangleBorder(
-                                  //       borderRadius: BorderRadius.circular(20),
-                                  //     ),
-                                  //   ),
-                                  //   child: const Text(
-                                  //     'Riwayat Tagihan',
-                                  //     style: TextStyle(
-                                  //       fontSize: 16,
-                                  //       fontFamily: 'Poppins',
-                                  //       color: Colors.white,
-                                  //     ),
-                                  //   ),
-                                  // ),
+                                  SizedBox(width: 16),
+                                  //Tombol Riwayat Tagihan
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              RiwayatPembayaranScreen(),
+                                        ),
+                                      );
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.grey[800],
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 12,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.history, // atau Icons.receipt_long
+                                      color: Colors.white,
+                                      size: 28,
+                                    ),
+                                    // child: const Text(
+                                    //   'Riwayat Tagihan',
+                                    //   style: TextStyle(
+                                    //     fontSize: 16,
+                                    //     fontFamily: 'Poppins',
+                                    //     color: Colors.white,
+                                    //   ),
+                                    // ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -423,7 +439,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildBalanceInfo(String title, String balance) {
+  Widget buildBalanceInfo(String title, String balance, {Color? valueColor}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -438,10 +454,10 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           balance,
           style: TextStyle(
-            fontSize: 28,
+            fontSize: 22,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.bold,
-            color: Colors.green[900],
+            color: valueColor ?? Colors.green[900],
           ),
         ),
       ],

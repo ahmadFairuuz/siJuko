@@ -3,12 +3,14 @@ class SimpananPoin {
   var simpananPokok;
   var tagihan;
   var poin;
+  var denda;
 
   SimpananPoin({
     this.simpananWajib,
     this.simpananPokok,
     this.tagihan,
     this.poin,
+    this.denda,
   });
 
   factory SimpananPoin.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class SimpananPoin {
       simpananPokok: json['simpanan_pokok'],
       tagihan: json['tagihan'],
       poin: json['poin'],
+      denda: json['denda'],
     );
   }
 }
