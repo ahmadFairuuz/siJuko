@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jukover7/api/RiwayatAPI.dart';
+import 'package:jukover7/component/RiwayatList.dart';
+import 'package:jukover7/data_model/RiwayatBayar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-import '../component/KegiatanListItem.dart';
-import '../data_model/KegiatanModel.dart';
 
 //RIWAYAT PEMBAYARAN
 class RiwayatPembayaranScreen extends StatefulWidget {
@@ -14,25 +14,11 @@ class RiwayatPembayaranScreen extends StatefulWidget {
 }
 
 class _RiwayatPembayaranScreenState extends State<RiwayatPembayaranScreen> {
-  Future<List<KegiatanModel>> dataKegiatan = Future.value([]);
+  Future<List<RiwayatBayar>> dataRiwayat = Future.value([]);
   final RefreshController _refreshController = RefreshController(
     initialRefresh: false,
   );
 
-  // DATA KEGIATAN
-  // class KegiatanScreen extends StatefulWidget {
-  //   const KegiatanScreen({super.key});
-  //
-  //   @override
-  //   State<KegiatanScreen> createState() => _KegiatanScreenState();
-  // }
-
-  // class _KegiatanScreenState extends State<KegiatanScreen> {
-  //   Future<List<KegiatanModel>> dataKegiatan = Future.value([]);
-  //   final RefreshController _refreshController = RefreshController(
-  //     initialRefresh: false,
-  //   );
-  //
   @override
   void initState() {
     super.initState();
@@ -40,9 +26,8 @@ class _RiwayatPembayaranScreenState extends State<RiwayatPembayaranScreen> {
   }
 
   void getData() async {
-    List<KegiatanModel> data = [];
     setState(() {
-      dataKegiatan = Future.value(data);
+      dataRiwayat = RiwayatApi.getRiwayat();
     });
   }
 
@@ -57,7 +42,7 @@ class _RiwayatPembayaranScreenState extends State<RiwayatPembayaranScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Riwayat Simpanan',
+          'Riwayat Pembayaran Simpanan',
           style: TextStyle(
             fontFamily: 'Poppins',
             color: Colors.black,
@@ -65,29 +50,8 @@ class _RiwayatPembayaranScreenState extends State<RiwayatPembayaranScreen> {
         ),
       ),
       body: FutureBuilder(
-        // future: dataRiwayat,
-        // builder: (context, AsyncSnapshot<List<RiwayatModel>> snapshot) {
-        //   if (snapshot.connectionState == ConnectionState.done) {
-        //     if (snapshot.data!.isNotEmpty) {
-        //       return Container(
-        //         padding: const EdgeInsets.all(10),
-        //         width: MediaQuery.of(context).size.width,
-        //         child: SmartRefresher(
-        //           controller: _refreshController,
-        //           onRefresh: refreshData,
-        //           enablePullUp: true,
-        //           child: ListView.separated(
-        //             itemBuilder: (context, index) =>
-        //                 RiwayatItem(dataKegiatan: snapshot.data![index]),
-        //             separatorBuilder: (context, index) =>
-        //                 Container(height: 1, color: Colors.black26),
-        //             itemCount: snapshot.data!.length,
-        //           ),
-        //         ),
-        //       );
-        //DATA KEGIATAN
-        future: dataKegiatan,
-        builder: (context, AsyncSnapshot<List<KegiatanModel>> snapshot) {
+        future: dataRiwayat,
+        builder: (context, AsyncSnapshot<List<RiwayatBayar>> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data!.isNotEmpty) {
               return Container(
@@ -99,7 +63,7 @@ class _RiwayatPembayaranScreenState extends State<RiwayatPembayaranScreen> {
                   enablePullUp: true,
                   child: ListView.separated(
                     itemBuilder: (context, index) =>
-                        KegiatanItem(dataKegiatan: snapshot.data![index]),
+                        Riwayatlist(dataRiwayat: snapshot.data![index]),
                     separatorBuilder: (context, index) =>
                         Container(height: 1, color: Colors.black26),
                     itemCount: snapshot.data!.length,
@@ -107,7 +71,7 @@ class _RiwayatPembayaranScreenState extends State<RiwayatPembayaranScreen> {
                 ),
               );
             } else {
-              return const Center(child: Text('Belum ada Kegiatan Terdekat'));
+              return const Center(child: Text('Belum Ada Pembayaran'));
             }
           } else {
             return const Center(child: CircularProgressIndicator());

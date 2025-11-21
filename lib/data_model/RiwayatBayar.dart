@@ -1,25 +1,25 @@
-class SimpananPoin {
-  var simpananWajib;
-  var simpananPokok;
-  var tagihan;
-  var poin;
+class RiwayatBayar {
+  String waktuPembayaran;
+  var nominal;
   var denda;
+  String status;
+  String namaLengkap;
 
-  SimpananPoin({
-    this.simpananWajib,
-    this.simpananPokok,
-    this.tagihan,
-    this.poin,
-    this.denda,
+  RiwayatBayar({
+    required this.waktuPembayaran,
+    required this.nominal,
+    required this.denda,
+    required this.status,
+    required this.namaLengkap,
   });
 
-  factory SimpananPoin.fromJson(Map<String, dynamic> json) {
-    return SimpananPoin(
-      simpananWajib: json['simpanan_wajib'],
-      simpananPokok: json['simpanan_pokok'],
-      tagihan: json['tagihan'],
-      poin: json['poin'],
+  factory RiwayatBayar.fromJson(Map<String, dynamic> json) {
+    return RiwayatBayar(
+      waktuPembayaran: json['timestamp'],
+      nominal: json['nominal'],
       denda: json['denda'],
+      status: json['status'],
+      namaLengkap: json['nama_lengkap'],
     );
   }
 }

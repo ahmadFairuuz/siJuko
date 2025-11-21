@@ -48,8 +48,8 @@ android {
         //minSdk = 29 //android version 10
         minSdk = 26 //android version 8.0
         targetSdk = flutter.targetSdkVersion
-        versionCode = 14
-        versionName = "7.1.0"
+        versionCode = 15
+        versionName = "7.2.0"
     }
 
     buildTypes {
