@@ -103,10 +103,16 @@ class _DaftarScreenState extends State<DaftarScreen> {
                   children: [
                     TextFormField(
                       controller: _nomorAnggotaController,
-                      decoration: InputDecoration(labelText: 'Nomor Anggota '),
+                      decoration: InputDecoration(
+                        labelText: 'Nomor Anggota',
+                        helperText: 'ex: XXXX/Kopma_UL/XX',
+                      ),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Nomor anggota tidak boleh kosong';
+                        }
+                        if (value.length != 16) {
+                          return 'Nomor Anggota harus 16 karakter';
                         }
                         return null;
                       },
@@ -143,7 +149,7 @@ class _DaftarScreenState extends State<DaftarScreen> {
                       controller: _konfirmasiPasswordController,
                       obscureText: _obscureConfirmPassword,
                       decoration: InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Konfirmasi Password',
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscureConfirmPassword
