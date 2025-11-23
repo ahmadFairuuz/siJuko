@@ -11,6 +11,16 @@ class KegiatanItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firstWord = dataKegiatan.nama_kegiatan
+        .trim()
+        .split(" ")
+        .first
+        .toLowerCase();
+
+    if (firstWord == "piket") {
+      return SizedBox.shrink(); // tidak tampil sama sekali
+    }
+
     var date = DateTime.parse(dataKegiatan.tanggal_kegiatan);
     var dateLeft = (date.difference(DateTime.now()).inDays + 1);
     var isAfter = date.isAfter(DateTime.now());

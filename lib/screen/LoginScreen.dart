@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jukover7/screen/DaftarScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/authAPI.dart';
@@ -67,14 +68,17 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       } catch (error) {
-        // Tangkap dan tampilkan kesalahan
-        print("Error during login: $error");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Terjadi kesalahan: $error"),
-            duration: const Duration(seconds: 2),
-          ),
-        );
+        String message = "Terjadi kesalahan. Silakan coba lagi.";
+
+        if (error.toString().contains("SocketException")) {
+          message = "Tidak ada koneksi internet.";
+        } else if (error.toString().contains("Timeout")) {
+          message = "Server tidak merespons. Coba beberapa saat lagi.";
+        }
+
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(message)));
       } finally {
         _setWaiting(); // Selalu matikan loading setelah proses selesai
       }
@@ -174,6 +178,37 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.white,
                         ),
                       ),
+                    ),
+                    SizedBox(height: 16),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Belum punya akun? ",
+                          style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DaftarScreen(),
+                              ), // arahkan ke halaman daftar
+                            );
+                          },
+                          child: Text(
+                            "Daftar",
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              color: Colors.green[900],
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

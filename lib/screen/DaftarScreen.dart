@@ -185,6 +185,37 @@ class _DaftarScreenState extends State<DaftarScreen> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 16),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Sudah punya akun? ",
+                          style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              ), // arahkan ke halaman daftar
+                            );
+                          },
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              color: Colors.green[900],
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
