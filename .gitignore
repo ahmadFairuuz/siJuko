@@ -1,3 +1,11 @@
+# Security & Credentials (Wajib untuk Public Repo)
+*.env
+*.jks
+*.keystore
+key.properties
+google-services.json
+GoogleService-Info.plist
+
 # Miscellaneous
 *.class
 *.log
